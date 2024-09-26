@@ -1,8 +1,7 @@
-#
 Codigo Backend BSongifyUp
 #
 
-# SongifyUp
+## SongifyUp
 Permite gestionar mediante Java-Spring Boot, el registro y administración de canciones a través de una API REST. Permitiendo a los usuarios reproducir sus canciones favoritas, almacenando la descripción de cada canción en una base de datos en servidor de la nube MySQl. 
 
 ## Tecnologías
