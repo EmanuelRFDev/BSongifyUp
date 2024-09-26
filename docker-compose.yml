@@ -1,0 +1,46 @@
+version: "3.9"
+services:
+
+  spring-api-songifyup-image:
+    image: spring-api-songifyup
+    container_name: spring-api-songifyup-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-network
+    environment:
+      DB_URL: jdbc:mysql://mysql_database_songifyup:3306/apirestsongifyup_DB?createDatabaseIfNotExist=true&serverTimezone=UTC
+      DB_USER_NAME: msapirestsongify
+      DB_PASSWORD: 2000
+    restart: always
+    depends_on:
+      mysql-songifyup-image:
+       condition: service_healthy
+
+  mysql-songifyup-image:
+    image: mysql
+    container_name: mysql_database_songifyup
+    environment:
+      MYSQL_ROOT_PASSWORD: 1998
+      MYSQL_DATABASE: apirestsongifyup_DB
+      MYSQL_USER: msapirestsongify
+      MYSQL_PASSWORD: 2000
+    ports:
+      - "3307:3306"
+    networks:
+      - spring-network
+    volumes:
+      - mysql-volume:/var/lib/mysql
+    restart: always
+    healthcheck:
+     test: ["CMD", "mysqladmin" ,"ping", "-h", "mysql_database_songifyup"]
+     timeout: 10s
+     retries: 3
+
+networks:
+  spring-network:
+volumes:
+  mysql-volume:
